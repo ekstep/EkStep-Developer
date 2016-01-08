@@ -385,4 +385,8 @@ public class Splashscreeen extends Activity implements IRegister{
         if(partner!=null)
         partner.finish();
     }
+
+
+
+
 }

@@ -27,12 +27,12 @@
         "fieldValues": []
       },
       {
-        "fieldName": "UserName",
+        "fieldName": "FirstName",
         "fieldvalue": {
           "fieldType": "Text",
           "fieldInputType": "text",
           "validation": {
-            "flag": true,
+            "flag": false,
             "minimum": 3,
             "maximum": 25
           }
@@ -49,7 +49,7 @@
           "validation": {
             "flag": true,
             "minimum": 1,
-            "maximum": 0
+            "maximum": 3
           }
         },
         "fieldHint": "You can select one or more options",
@@ -191,7 +191,7 @@
           "fieldType": "Text",
           "fieldInputType": "date",
           "validation": {
-            "flag": true,
+            "flag": false,
             "minimum": 1,
             "maximum": 10
           }
