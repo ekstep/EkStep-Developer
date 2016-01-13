@@ -32,6 +32,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -153,290 +154,15 @@ public class DisplayChildProfileFragment extends Fragment implements IEndSession
         progressBar=(MyProgressBar)rootView.findViewById(R.id.sendingDetails);
         scrollViewChildContainer=(ScrollView)rootView.findViewById(R.id.scrollViewChildContainer);
 
-                createChildForm();
+                displayForm();
 
 
         Register_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int sectionSize = configModel.getSectionValues().length;
-                if (D)
-                    Log.d(TAG, "Register_btn sectionSize==>" + sectionSize);
 
-                SectionValue[] sectionValues = configModel.getSectionValues();
-                boolean flag = true, noEmptyField = true;
-                try {
-                    int i = 0;
-                    for (int pos = 0; pos < sectionSize; pos++) {
-                        final FieldModel[] fieldModels = sectionValues[pos].getFieldModels();
-                        int length = fieldModels.length;
-                        for (int j = 0; j < length; j++) {
-                            i++;
-                            final String fieldLabelName = fieldModels[j].getFieldName();
-                            if (D)
-                                Log.d(TAG, "fieldLabelName==>" + fieldLabelName);
-                            if (!fieldLabelName.equalsIgnoreCase("instructions")) {
-                                String fieldType = fieldModels[j].getFieldValue().getFieldType();
-                                String fieldInputType = fieldModels[j].getFieldValue().getFieldInputType();
-
-                                if (D)
-                                    Log.d(TAG, "fieldType" + fieldType + ", fieldInputType" + fieldInputType);
-                                boolean validation = fieldModels[j].getFieldValue().getValidation().isFlag();
-                                if (D)
-                                    Log.d(TAG, "4.validation" + validation);
-
-                                final int fieldPos = j;
-                                final int editRows = i;
-
-                                int maxvalue = fieldModels[fieldPos].getFieldValue().getValidation().getMaximum();
-                                int minvalue = fieldModels[fieldPos].getFieldValue().getValidation().getMinimum();
-                                 if (fieldInputType.equals("date") ) {
-                                    if (validation) {
-                                        if (textViewData[i].getText().toString().trim().isEmpty()) {
-                                            Util.showToastmessage(mContext, "Please select " + fieldLabelName);
-                                            noEmptyField = false;
-                                            break;
-                                        }
-
-                                    }
-                                    //Setting date
-                                    hashMapData.put(fieldLabelName, textViewData[i].getText().toString());
-
-
-                                }
-                                else if (fieldType.equals("Text")) {  //1. Validation of TEXT
-                                    String charstr = editTexts[editRows].getText().toString();
-                                    int charCount = charstr.length();
-                                    //(i). Validation of Email
-                                    if (fieldInputType.equals("textEmailAddress")) {
-                                        String emailid = editTexts[i].getText().toString();
-                                        //for emailid
-                                        Pattern pattern2 = Pattern.compile("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+");
-                                        Matcher matcher2 = pattern2.matcher(emailid);
-                                        Boolean emailpattern = matcher2.matches();
-                                        if (validation) { //validation :true
-                                            if (emailid.trim().isEmpty()) {
-                                                Util.showToastmessage(mContext, "Please enter " + fieldLabelName);
-                                                noEmptyField = false;
-                                                break;
-                                            } else if (!emailpattern) {
-                                                Util.showToastmessage(mContext, "Please enter valid " + fieldLabelName);
-                                                noEmptyField = false;
-                                                break;
-                                            } else if (charCount < minvalue) { // Validation
-                                                Util.showToastmessage(mContext, fieldLabelName + " can't be less than " + minvalue + " character.");
-                                                noEmptyField = false;
-                                                break;
-
-                                            } else if (charCount > maxvalue) { // Validation
-                                                Util.showToastmessage(mContext, fieldLabelName + " can't be more than " + maxvalue + " character.");
-                                                noEmptyField = false;
-                                                break;
-                                            }
-
-
-                                        } else {  //validation :false
-                                            if (!emailid.trim().isEmpty()) {
-                                                if (!emailpattern) {
-                                                    Util.showToastmessage(mContext, "Please enter valid " + fieldLabelName);
-                                                    noEmptyField = false;
-                                                    break;
-                                                }
-                                            }
-                                        }
-                                        //Setting email-id
-                                        hashMapData.put(fieldLabelName, editTexts[i].getText().toString());
-
-
-                                    }//------------------End of Validation of email
-                                    //(ii)Validation of integer
-                                    else if(fieldInputType.equalsIgnoreCase("number")){
-                                        if (validation) {
-                                            int inputInteger=0;
-                                            if(!charstr.isEmpty())
-                                                inputInteger =Integer.parseInt(charstr);
-
-                                            if (editTexts[i].getText().toString().trim().isEmpty()) {
-                                                Util.showToastmessage(mContext, "Please enter " + fieldLabelName);
-                                                noEmptyField = false;
-                                                break;
-                                            } else if (inputInteger < minvalue) { // Validation
-                                                Util.showToastmessage(mContext, fieldLabelName + " can't be less than " + minvalue);
-                                                noEmptyField = false;
-                                                break;
-
-                                            } else if (inputInteger > maxvalue) { // Validation
-                                                Util.showToastmessage(mContext, fieldLabelName + " can't be more than " + maxvalue);
-                                                noEmptyField = false;
-                                                break;
-                                            }
-                                        }
-                                        //Setting text
-                                        hashMapData.put(fieldLabelName, editTexts[i].getText().toString());
-
-
-                                    } //end of (ii)Validation of integer
-                                    //(iii)Validation of numberDecimal
-                                    else if(fieldInputType.equalsIgnoreCase("numberDecimal")){
-                                        if (validation) {
-                                            double inputDouble=0.0;
-                                            if(!charstr.isEmpty())
-                                            inputDouble=Double.parseDouble(charstr);
-
-                                            if (editTexts[i].getText().toString().trim().isEmpty()) {
-                                                Util.showToastmessage(mContext, "Please enter " + fieldLabelName);
-                                                noEmptyField = false;
-                                                break;
-                                            } else if (inputDouble < minvalue) { // Validation
-                                                Util.showToastmessage(mContext, fieldLabelName + " can't be less than " + minvalue);
-                                                noEmptyField = false;
-                                                break;
-
-                                            } else if (inputDouble > maxvalue) { // Validation
-                                                Util.showToastmessage(mContext, fieldLabelName + " can't be more than " + maxvalue);
-                                                noEmptyField = false;
-                                                break;
-                                            }
-                                        }
-                                        //Setting text
-                                        hashMapData.put(fieldLabelName, editTexts[i].getText().toString());
-
-
-                                    } //end of (ii)Validation of integer
-
-
-                                    //(ii). Validation of text
-                                    else {
-                                        if (validation) {
-                                            if (editTexts[i].getText().toString().trim().isEmpty()) {
-                                                Util.showToastmessage(mContext, "Please enter " + fieldLabelName);
-                                                noEmptyField = false;
-                                                break;
-                                            } else if (charCount < minvalue) { // Validation
-                                                Util.showToastmessage(mContext, fieldLabelName + " can't be less than " + minvalue + " character.");
-                                                noEmptyField = false;
-                                                break;
-
-                                            } else if (charCount > maxvalue) { // Validation
-                                                Util.showToastmessage(mContext, fieldLabelName + " can't be more than " + maxvalue + " character.");
-                                                noEmptyField = false;
-                                                break;
-                                            }
-                                        }
-                                        //Setting text
-                                        hashMapData.put(fieldLabelName, editTexts[i].getText().toString());
-
-
-                                    } //end of  Validation of text.............
-
-
-                                } else if (fieldType.equals("MultipleChoiceMore")) {  //2. Validation of CheckBox
-
-                                    //fieldValues
-                                    ArrayList field_Value = fieldModels[j].getFieldValues();
-                                    boolean ischkBox = false;
-                                    ArrayList<String> OptionSelected = new ArrayList<String>();
-
-                                    for (int k = 0; k < field_Value.size(); k++) {
-                                        if (checkBoxes[k].isChecked()) {
-                                            ischkBox = true;
-                                            OptionSelected.add(checkBoxes[k].getText().toString());
-
-                                        }
-                                    }
-                                    if (validation) { //validation :true
-                                        int size = OptionSelected.size();
-                                        if (!ischkBox) {
-                                            Util.showToastmessage(mContext, "Please select " + fieldLabelName);
-                                            noEmptyField = false;
-                                            break;
-                                        } else if (size < minvalue) { // Validation
-                                            Util.showToastmessage(mContext, "You should select " + fieldLabelName + " minimum " + minvalue + " option.");
-                                            noEmptyField = false;
-                                            break;
-
-                                        } else if (size > maxvalue) { // Validation
-                                            Util.showToastmessage(mContext, "You can't select " + fieldLabelName + " more than " + maxvalue + " option.");
-                                            noEmptyField = false;
-                                            break;
-                                        }
-
-                                    }
-
-                                    hashMapData.put(fieldLabelName, OptionSelected);
-
-
-                                }// End of Validation of CheckBox
-                                //--------------------3. Validation of Radio button
-                                else if (fieldType.equals("MultipleChoiceSingle")) {
-                                    //fieldValues
-                                    ArrayList field_Value = fieldModels[j].getFieldValues();
-                                    if (radioGroups[i].getCheckedRadioButtonId() == -1) {
-                                        if (validation) { //validation :true
-                                            Util.showToastmessage(mContext, "Please select any one " + fieldLabelName);
-                                            noEmptyField = false;
-                                            break;
-                                        }
-                                    } else {
-                                        for (int k = 0; k < field_Value.size(); k++) {
-                                            // get selected radio button from radioGroup
-                                            int selectedId = radioGroups[i].getCheckedRadioButtonId();
-                                            // find the radiobutton by returned id
-                                            RadioButton selectedRadioButton = (RadioButton) rootView.findViewById(selectedId);
-                                            String selectedRB = selectedRadioButton.getText().toString();
-                                            hashMapData.put(fieldLabelName, selectedRB);
-                                        }
-                                    }
-                                } //-------------end of Radio Button
-                                //--------------------------4.DropDown
-                                else if (fieldType.equals("DropDown")) { //dropdown value
-                                    hashMapData.put(fieldLabelName, spinners[i].getSelectedItem().toString());
-                                }//5. Validation of TextComment-----------------
-                                else if (fieldType.equals("TextComment")) {
-                                    String charstr = editTexts[editRows].getText().toString();
-                                    int charCount = charstr.length();
-
-                                    if (validation) {
-                                        if (editTexts[i].getText().toString().trim().isEmpty()) {
-                                            Util.showToastmessage(mContext, "Please enter " + fieldLabelName);
-                                            noEmptyField = false;
-                                            break;
-                                        } else if (charCount < minvalue) { // Validation
-                                            Util.showToastmessage(mContext, fieldLabelName + " can't be less than " + minvalue + " line.");
-                                            noEmptyField = false;
-                                            break;
-
-                                        }
-                                    }
-                                    //Setting text
-                                    hashMapData.put(fieldLabelName, editTexts[i].getText().toString());
-
-
-                                }
-
-
-                            }
-
-                        } //end of inner for-loop
-
-                        if (!noEmptyField) {
-                            if (D)
-                                Log.d(TAG, "  :breaking inner loop  noEmptyField==>" + noEmptyField);
-
-                            break;
-                        }
-
-                    }//end of outer for loop
-                } catch (Exception e) {
-                    if (D)
-                        Log.d(TAG, "Exception in register info:" + e);
-                }
-
-                if (D)
-                    Log.d(TAG, noEmptyField + " noEmptyField :hashMapData ==>" + hashMapData);
-
-                if (noEmptyField) {
-                     registerChild();
+                if (isValidateData()) {
+                     sendDataToGenieServices();
 
                 }
 
@@ -444,15 +170,295 @@ public class DisplayChildProfileFragment extends Fragment implements IEndSession
         });
         return rootView;
     }
+    /*
+    * To validate form data*/
+    private boolean isValidateData(){
+        int sectionSize = configModel.getSectionValues().length;
+        if (D)
+            Log.d(TAG, "Register_btn sectionSize==>" + sectionSize);
 
-    private void registerChild(){
+        SectionValue[] sectionValues = configModel.getSectionValues();
+        boolean flag = true, noEmptyField = true;
+        try {
+            int i = 0;
+            for (int pos = 0; pos < sectionSize; pos++) {
+                final FieldModel[] fieldModels = sectionValues[pos].getFieldModels();
+                int length = fieldModels.length;
+                for (int j = 0; j < length; j++) {
+                    i++;
+                    final String fieldLabelName = fieldModels[j].getFieldName();
+                    if (D)
+                        Log.d(TAG, "fieldLabelName==>" + fieldLabelName);
+                    if (!fieldLabelName.equalsIgnoreCase("instructions")) {
+                        String fieldType = fieldModels[j].getFieldValue().getFieldType();
+                        String fieldInputType = fieldModels[j].getFieldValue().getFieldInputType();
+
+                        if (D)
+                            Log.d(TAG, "fieldType" + fieldType + ", fieldInputType" + fieldInputType);
+                        boolean validation = fieldModels[j].getFieldValue().getValidation().isFlag();
+                        if (D)
+                            Log.d(TAG, "4.validation" + validation);
+
+                        final int fieldPos = j;
+                        final int editRows = i;
+
+                        int maxvalue = fieldModels[fieldPos].getFieldValue().getValidation().getMaximum();
+                        int minvalue = fieldModels[fieldPos].getFieldValue().getValidation().getMinimum();
+                        if (fieldInputType.equals("date") ) {
+                            if (validation) {
+                                if (textViewData[i].getText().toString().trim().isEmpty()) {
+                                    Util.showToastmessage(mContext, "Please select " + fieldLabelName);
+                                    noEmptyField = false;
+                                    break;
+                                }
+
+                            }
+                            //Setting date
+                            hashMapData.put(fieldLabelName, textViewData[i].getText().toString());
+
+
+                        }
+                        else if (fieldType.equals("Text")) {  //1. Validation of TEXT
+                            String charstr = editTexts[editRows].getText().toString();
+                            int charCount = charstr.length();
+                            //(i). Validation of Email
+                            if (fieldInputType.equals("textEmailAddress")) {
+                                String emailid = editTexts[i].getText().toString();
+                                //for emailid
+                                Pattern pattern2 = Pattern.compile("[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+");
+                                Matcher matcher2 = pattern2.matcher(emailid);
+                                Boolean emailpattern = matcher2.matches();
+                                if (validation) { //validation :true
+                                    if (emailid.trim().isEmpty()) {
+                                        Util.showToastmessage(mContext, "Please enter " + fieldLabelName);
+                                        noEmptyField = false;
+                                        break;
+                                    } else if (!emailpattern) {
+                                        Util.showToastmessage(mContext, "Please enter valid " + fieldLabelName);
+                                        noEmptyField = false;
+                                        break;
+                                    } else if (charCount < minvalue) { // Validation
+                                        Util.showToastmessage(mContext, fieldLabelName + " can't be less than " + minvalue + " character.");
+                                        noEmptyField = false;
+                                        break;
+
+                                    } else if (charCount > maxvalue) { // Validation
+                                        Util.showToastmessage(mContext, fieldLabelName + " can't be more than " + maxvalue + " character.");
+                                        noEmptyField = false;
+                                        break;
+                                    }
+
+
+                                } else {  //validation :false
+                                    if (!emailid.trim().isEmpty()) {
+                                        if (!emailpattern) {
+                                            Util.showToastmessage(mContext, "Please enter valid " + fieldLabelName);
+                                            noEmptyField = false;
+                                            break;
+                                        }
+                                    }
+                                }
+                                //Setting email-id
+                                hashMapData.put(fieldLabelName, editTexts[i].getText().toString());
+
+
+                            }//------------------End of Validation of email
+                            //(ii)Validation of integer
+                            else if(fieldInputType.equalsIgnoreCase("number")){
+                                if (validation) {
+                                    int inputInteger=0;
+                                    if(!charstr.isEmpty())
+                                        inputInteger =Integer.parseInt(charstr);
+
+                                    if (editTexts[i].getText().toString().trim().isEmpty()) {
+                                        Util.showToastmessage(mContext, "Please enter " + fieldLabelName);
+                                        noEmptyField = false;
+                                        break;
+                                    } else if (inputInteger < minvalue) { // Validation
+                                        Util.showToastmessage(mContext, fieldLabelName + " can't be less than " + minvalue);
+                                        noEmptyField = false;
+                                        break;
+
+                                    } else if (inputInteger > maxvalue) { // Validation
+                                        Util.showToastmessage(mContext, fieldLabelName + " can't be more than " + maxvalue);
+                                        noEmptyField = false;
+                                        break;
+                                    }
+                                }
+                                //Setting text
+                                hashMapData.put(fieldLabelName, editTexts[i].getText().toString());
+
+
+                            } //end of (ii)Validation of integer
+                            //(iii)Validation of numberDecimal
+                            else if(fieldInputType.equalsIgnoreCase("numberDecimal")){
+                                if (validation) {
+                                    double inputDouble=0.0;
+                                    if(!charstr.isEmpty())
+                                        inputDouble=Double.parseDouble(charstr);
+
+                                    if (editTexts[i].getText().toString().trim().isEmpty()) {
+                                        Util.showToastmessage(mContext, "Please enter " + fieldLabelName);
+                                        noEmptyField = false;
+                                        break;
+                                    } else if (inputDouble < minvalue) { // Validation
+                                        Util.showToastmessage(mContext, fieldLabelName + " can't be less than " + minvalue);
+                                        noEmptyField = false;
+                                        break;
+
+                                    } else if (inputDouble > maxvalue) { // Validation
+                                        Util.showToastmessage(mContext, fieldLabelName + " can't be more than " + maxvalue);
+                                        noEmptyField = false;
+                                        break;
+                                    }
+                                }
+                                //Setting text
+                                hashMapData.put(fieldLabelName, editTexts[i].getText().toString());
+
+
+                            } //end of (ii)Validation of integer
+
+
+                            //(ii). Validation of text
+                            else {
+                                if (validation) {
+                                    if (editTexts[i].getText().toString().trim().isEmpty()) {
+                                        Util.showToastmessage(mContext, "Please enter " + fieldLabelName);
+                                        noEmptyField = false;
+                                        break;
+                                    } else if (charCount < minvalue) { // Validation
+                                        Util.showToastmessage(mContext, fieldLabelName + " can't be less than " + minvalue + " character.");
+                                        noEmptyField = false;
+                                        break;
+
+                                    } else if (charCount > maxvalue) { // Validation
+                                        Util.showToastmessage(mContext, fieldLabelName + " can't be more than " + maxvalue + " character.");
+                                        noEmptyField = false;
+                                        break;
+                                    }
+                                }
+                                //Setting text
+                                hashMapData.put(fieldLabelName, editTexts[i].getText().toString());
+
+
+                            } //end of  Validation of text.............
+
+
+                        } else if (fieldType.equals("MultipleChoiceMore")) {  //2. Validation of CheckBox
+
+                            //fieldValues
+                            ArrayList field_Value = fieldModels[j].getFieldValues();
+                            boolean ischkBox = false;
+                            ArrayList<String> OptionSelected = new ArrayList<String>();
+
+                            for (int k = 0; k < field_Value.size(); k++) {
+                                if (checkBoxes[k].isChecked()) {
+                                    ischkBox = true;
+                                    OptionSelected.add(checkBoxes[k].getText().toString());
+
+                                }
+                            }
+                            if (validation) { //validation :true
+                                int size = OptionSelected.size();
+                                if (!ischkBox) {
+                                    Util.showToastmessage(mContext, "Please select " + fieldLabelName);
+                                    noEmptyField = false;
+                                    break;
+                                } else if (size < minvalue) { // Validation
+                                    Util.showToastmessage(mContext, "You should select " + fieldLabelName + " minimum " + minvalue + " option.");
+                                    noEmptyField = false;
+                                    break;
+
+                                } else if (size > maxvalue) { // Validation
+                                    Util.showToastmessage(mContext, "You can't select " + fieldLabelName + " more than " + maxvalue + " option.");
+                                    noEmptyField = false;
+                                    break;
+                                }
+
+                            }
+
+                            hashMapData.put(fieldLabelName, OptionSelected);
+
+
+                        }// End of Validation of CheckBox
+                        //--------------------3. Validation of Radio button
+                        else if (fieldType.equals("MultipleChoiceSingle")) {
+                            //fieldValues
+                            ArrayList field_Value = fieldModels[j].getFieldValues();
+                            if (radioGroups[i].getCheckedRadioButtonId() == -1) {
+                                if (validation) { //validation :true
+                                    Util.showToastmessage(mContext, "Please select any one " + fieldLabelName);
+                                    noEmptyField = false;
+                                    break;
+                                }
+                            } else {
+                                for (int k = 0; k < field_Value.size(); k++) {
+                                    // get selected radio button from radioGroup
+                                    int selectedId = radioGroups[i].getCheckedRadioButtonId();
+                                    // find the radiobutton by returned id
+                                    RadioButton selectedRadioButton = (RadioButton) rootView.findViewById(selectedId);
+                                    String selectedRB = selectedRadioButton.getText().toString();
+                                    hashMapData.put(fieldLabelName, selectedRB);
+                                }
+                            }
+                        } //-------------end of Radio Button
+                        //--------------------------4.DropDown
+                        else if (fieldType.equals("DropDown")) { //dropdown value
+                            hashMapData.put(fieldLabelName, spinners[i].getSelectedItem().toString());
+                        }//5. Validation of TextComment-----------------
+                        else if (fieldType.equals("TextComment")) {
+                            String charstr = editTexts[editRows].getText().toString();
+                            int charCount = charstr.length();
+
+                            if (validation) {
+                                if (editTexts[i].getText().toString().trim().isEmpty()) {
+                                    Util.showToastmessage(mContext, "Please enter " + fieldLabelName);
+                                    noEmptyField = false;
+                                    break;
+                                } else if (charCount < minvalue) { // Validation
+                                    Util.showToastmessage(mContext, fieldLabelName + " can't be less than " + minvalue + " line.");
+                                    noEmptyField = false;
+                                    break;
+
+                                }
+                            }
+                            //Setting text
+                            hashMapData.put(fieldLabelName, editTexts[i].getText().toString());
+
+
+                        }
+
+
+                    }
+
+                } //end of inner for-loop
+
+                if (!noEmptyField) {
+                    if (D)
+                        Log.d(TAG, "  :breaking inner loop  noEmptyField==>" + noEmptyField);
+
+                    break;
+                }
+
+            }//end of outer for loop
+        } catch (Exception e) {
+            if (D)
+                Log.d(TAG, "Exception in register info:" + e);
+        }
+
+        if (D)
+            Log.d(TAG, noEmptyField + " noEmptyField :hashMapData ==>" + hashMapData);
+
+        return  noEmptyField;
+    }
+
+    private void sendDataToGenieServices(){
         progressBar.setVisibility(View.VISIBLE);
         scrollViewChildContainer.setVisibility(View.GONE);
         Register_btn.setVisibility(View.GONE);
         handle="GPA";
 
         Util util=(Util)mContext.getApplicationContext();
-       // hashMapData.put("mother_tongue",code.trim());
         //1. End the session
        if(D)
             Log.d(TAG,"hashMapData------>"+hashMapData);
@@ -473,8 +479,10 @@ public class DisplayChildProfileFragment extends Fragment implements IEndSession
     int lastSpecialRequestsCursorPosition;
     String specialRequests;
     int dateRow = 0,SectionField=0,SectionfieldRow;
-    DatePickerDialog.OnDateSetListener     mDatePickerListeners[]=new DatePickerDialog.OnDateSetListener[100];
-    private void createChildForm(){
+    DatePickerDialog.OnDateSetListener mDatePickerListeners[]=new DatePickerDialog.OnDateSetListener[100];
+    /*
+    * displaying fields based on configuration file*/
+    private void displayForm(){
         try {
              configModel=new Util(mContext).getConfigModel();
             int sectionSize=configModel.getSectionValues().length;
@@ -482,10 +490,7 @@ public class DisplayChildProfileFragment extends Fragment implements IEndSession
                 Log.d(TAG, "sectionSize :" + sectionSize);
             String partnerName=configModel.getPartnerName();
             ((MainActivity) mContext).showTitle(partnerName, mFragment);
-            // final ValidationField[] validationField=new ValidationField[fieldSize];
            final SectionValue[] sectionValues=configModel.getSectionValues();
-            //InstructionsField[] instructionsFields=sectionValues.ge;
-
             //Layout inflater
             View view;
             InstructionsField[] instructionsFields=new InstructionsField[sectionSize];
@@ -519,6 +524,7 @@ public class DisplayChildProfileFragment extends Fragment implements IEndSession
                         String fieldType ="";
                         String fieldInputType = "";
                         String fieldHint=fieldModels[j].getFieldHint();
+
 
                         // int displayOrder = fieldModels[j].getDisplayOrder();
                         if(fieldLabelName.equalsIgnoreCase("instructions")){
@@ -841,6 +847,37 @@ public class DisplayChildProfileFragment extends Fragment implements IEndSession
                     Log.d(TAG," =========end fields of section======>");
 
         }//end of outer for-loop
+
+
+            //To Show soft keyboard
+            if(sectionValues[0].getFieldModels()[0].getFieldName().equalsIgnoreCase("instructions")){
+                //then at 1st pos if fieldType="Text" show key
+                String fieldTypeChk=sectionValues[0].getFieldModels()[1].getFieldValue().getFieldType();
+                String fieldInputTypeChk=sectionValues[0].getFieldModels()[1].getFieldValue().getFieldInputType();
+                if(!fieldInputTypeChk.equals("date")){
+                    if (fieldTypeChk.equals("Text")) {
+                        //show key
+                        if(D)
+                            Log.d(TAG,"showing key-----------------");
+                        Util.showKeyboard(getActivity(), mContext);
+                    }
+                }
+
+
+            }else{
+                //then at 0th pos if fieldType="Text" show key
+                String fieldTypeChk=sectionValues[0].getFieldModels()[0].getFieldValue().getFieldType();
+                String fieldInputTypeChk=sectionValues[0].getFieldModels()[0].getFieldValue().getFieldInputType();
+                if(!fieldInputTypeChk.equals("date")){
+                    if (fieldTypeChk.equals("Text")) {
+                        //show key
+                        if(D)
+                            Log.d(TAG,"showing key-----------------");
+                        Util.showKeyboard(getActivity(), mContext);
+                    }
+                }
+            }
+            //end of  Show soft keyboard
 
 
 

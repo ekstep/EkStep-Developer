@@ -109,7 +109,7 @@ public class Splashscreeen extends Activity implements IRegister{
         }, 2 * 1000);
 
     }
-    public String loadJSONFromAsset() {
+    public String loadConfigFileFromAsset() {
         String json = null;
         try {
             InputStream is = getAssets().open("config.json");
@@ -136,7 +136,7 @@ public class Splashscreeen extends Activity implements IRegister{
             @Override
             protected Void doInBackground(Void... voids) {
                 try {
-                    String jsonData=loadJSONFromAsset();
+                    String jsonData=loadConfigFileFromAsset();
                     if(D)
                         Log.d(TAG,"jsonData==>"+jsonData);
 
@@ -301,22 +301,6 @@ public class Splashscreeen extends Activity implements IRegister{
 
 
                         Arrays.sort(fieldModel);
-
-                       /* for(int p=0;p<fieldSize;p++){
-                            if(D)
-                                Log.d(TAG,"Display  fieldModel at pos=============>"+p);
-
-                            if(fieldModel[p]!=null) {
-                                if(D)
-                                    Log.d(TAG,"Display if Modified fieldModel at pos=============>"+p);
-
-                                if (D)
-                                    Log.d(TAG, i + " at pos  getDisplayOrder:" + fieldModel[p].getDisplayOrder());
-
-                            }
-                        }
-*/
-
                         sectionValues[i].setFieldModels(fieldModel);
 
 

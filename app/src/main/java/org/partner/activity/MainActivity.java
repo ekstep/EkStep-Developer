@@ -34,7 +34,7 @@ import org.ekstep.genieservices.sdks.UserProfile;
 import org.ekstep.genieservices.sdks.response.GenieListResponse;
 
 public class MainActivity extends AppCompatActivity implements NavigationDrawer.FragmentDrawerListener,
-        ILanguage,ITelemetryData {
+        ITelemetryData {
     private boolean D= Util.DEBUG;
     private String TAG=MainActivity.class.getSimpleName();
     private Fragment fragment;
@@ -98,12 +98,8 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawer.
         getWindow().setStatusBarColor(Color.parseColor(ColorPrimaryDark));
         mToolbar.setBackgroundColor(Color.parseColor(ColorPrimary));
 */
-        //get language list
-        languageList=new LanguageList(MainActivity.this);
-        languageResponseHandler=new LanguageResponseHandler(this);
-        languageList.getAll(languageResponseHandler);
 
-        displayView(2);
+        displayView(0);
 
         //initialitize the partner
         partner=new Partner(MainActivity.this);
@@ -129,29 +125,16 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawer.
 
     @Override
     public void onDrawerItemSelected(View view, int position) {
-       /* if(position==0){
-            displayView(position);
-        }else{*/
         showMaterialDialog("Are you sure to exit?","","YES","CANCEL");
         materialDialog.show();
-        // }
-
-
-
     }
 
     private void displayView(int position) {
         // Fragment fragment;
 
         switch (position) {
-           /* case 0:
-
-                fragment = new HomeFragment();
-                switchContent(fragment, 1, true);
-                break;
-           */ case 2:
-
-                fragment = new DisplayChildProfileFragment();
+            case 0:
+                 fragment = new DisplayChildProfileFragment();
                 switchContent(fragment, 1, true);
                 break;
 
@@ -260,28 +243,7 @@ public class MainActivity extends AppCompatActivity implements NavigationDrawer.
 
     }
 
-
-
-
-    @Override
-    public void onSuccessLanguage(GenieListResponse genieListResponse) {
-        String result=new Gson().toJson(genieListResponse.getResults());
-        if(D)
-            Log.d(TAG," onSuccessLanguage :"+result);
-        Util util=(Util)mContext.getApplicationContext();
-        util.setLanguage(result);
-
-
-    }
-
-    @Override
-    public void onFailureLanguage(GenieListResponse genieListResponse) {
-        String result=new Gson().toJson(genieListResponse.getResults());
-        if(D)
-            Log.d(TAG," onFailureLanguage :"+result);
-    }
-
-    @Override
+  @Override
     protected void onDestroy() {
         super.onDestroy();
         if (D)

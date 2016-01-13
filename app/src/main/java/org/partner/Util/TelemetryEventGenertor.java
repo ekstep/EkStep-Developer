@@ -52,6 +52,7 @@ public class TelemetryEventGenertor {
             eDataJsonObject.put(EXT, extObject);
             mainJSONObject.put(EVENT_DATA, eDataJsonObject);
 
+            if(Util.DEBUG)
             Log.e("OE_START_EVENT", mainJSONObject.toString());
 
 
@@ -92,7 +93,7 @@ public class TelemetryEventGenertor {
             JSONObject extObject=new JSONObject();
             eksJsonObject.put(EXT, extObject);
             mainJSONObject.put(EVENT_DATA, eksJsonObject);
-
+            if(Util.DEBUG)
             Log.e("OE_END_EVENT", mainJSONObject.toString());
 
 

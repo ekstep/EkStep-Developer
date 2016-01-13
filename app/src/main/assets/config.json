@@ -23,7 +23,7 @@
           }
         },
         "fieldHint": "enter aplhabet character",
-        "displayOrder": 1,
+        "displayOrder": 5,
         "fieldValues": []
       },
       {
@@ -53,7 +53,7 @@
           }
         },
         "fieldHint": "You can select one or more options",
-        "displayOrder": 5,
+        "displayOrder": 1,
         "fieldValues": ["Java","PHP","Android","SAP"]
       },
       {
