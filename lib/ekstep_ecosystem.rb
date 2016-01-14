@@ -1,8 +1,9 @@
 require 'pry'
 require 'yaml'
 require_relative './utils/ep_logging.rb'
-require_relative '../lib/model/last_sync_date'
+require_relative '../lib/model/sync_date'
 require_relative '../lib/core/data_sync_controller'
+require_relative '../lib/external/data_exhaust_api'
 require_relative '../config/config'
 
 module EkstepEcosystem
@@ -16,11 +17,20 @@ module EkstepEcosystem
         begin
           logger.start_task
           config = Config.load
+          api = DataExhaustApi.new(config.data_exhaust_api_endpoint, logger)
           DataSyncController
-              .new(LastSyncDate.new(config.data_dir,
-                                    config.store_file_name,
-                                    config.initial_download_date,
-                                    logger),
+              .new(SyncDate.new(config.data_dir,
+                                config.store_file_name,
+                                config.initial_download_date,
+                                config.download_batch_size,
+                                logger),
+                   config.download_batch_size,
+                   config.dataset_id,
+                   config.resource_id,
+                   config.licence_key,
+                   config.aws_region,
+                   config.s3_datasets_bucket,
+                   api,
                    logger)
               .sync()
           logger.end_task

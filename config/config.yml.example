@@ -1,0 +1,11 @@
+---
+data_dir: ekstep-data-sync
+store_file_name: store.yml
+download_batch_size: 5
+initial_download_date: 2015-01-01 #YYYY-MM-dd format
+dataset_id: {dataset-id}
+resource_id: {resource-id}
+licence_key: {licence_key}
+data_exhaust_api_endpoint: http://sandbox.ekstep.org/qa/api/v1/datasets/
+aws_region: ap-southeast-1
+s3_datasets_bucket: {s3_bucket}
