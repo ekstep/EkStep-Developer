@@ -1,12 +1,12 @@
 apply plugin: 'com.android.application'
 buildscript {
     repositories {
-        maven { url  "http://${nexusIp}:8081/nexus/content/repositories/production/" }
+        maven { url  "http://${nexusIp}:8081/downloads/content/repositories/production/" }
     }
 }
 
 repositories {
-    maven { url "http://${nexusIp}:8081/nexus/content/repositories/production/" }
+    maven { url "http://${nexusIp}:8081/downloads/content/repositories/production/" }
 }
 
 android {
