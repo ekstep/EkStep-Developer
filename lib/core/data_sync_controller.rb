@@ -49,6 +49,7 @@ module EkstepEcosystem
           @sync_date.update(to_date)
         rescue => e
           @logger.error("EXCEPTION: #{e}")
+          return
         end while true
         #find till where the data is downloaded
         #initiate download for data from last download data, in batches

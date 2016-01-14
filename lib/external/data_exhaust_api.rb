@@ -1,6 +1,7 @@
 require 'pry'
 require 'uri'
 require 'net/http'
+require 'securerandom'
 
 module EkstepEcosystem
   module Jobs
@@ -16,10 +17,25 @@ module EkstepEcosystem
         url = URI("#{@endpoint}/#{dataset_id}/#{resource_id}/#{from_date}/#{to_date}")
         request = Net::HTTP::Post.new(url)
         request["content-type"] = 'application/json'
-        request.body = "{\n    \"id\": \"ekstep.data_exhaust_authorize\",\n    \"ver\": \"1.0\",\n    \"ts\": \"2015-08-04T17:36:36+05:30\",\n    \"params\": {\n        \"requesterId\": \"\", \n        \"did\": \"ff305d54-85b4-341b-da2f-eb6b9e5460fa\",\n        \"key\": \"\",\n        \"msgid\": \"ff305d54-85b4-341b-da2f-eb6b9e5460fa\"\n    },\n    \"request\": {\n         \"licensekey\": \"f55e9009-79d9-4732-9864-83c3dad98f77\"\n    }\n}"
+        request.body = {
+            :id => 'ekstep.data_exhaust_authorize',
+            :ver => '1.0',
+            :ts => Time.now.utc.strftime('%FT%T%:z'),
+            :params => {
+                :msgid => SecureRandom.uuid
+            },
+            :request => {:licensekey => "#{licence_key}"}
+        }.to_json
+
         @logger.info("DOWNLOADING DATA FROM DATA EXHAUST API. URL: #{url}")
         response = @http.request(request)
-        @logger.info("DOWNLOADING SUCCESSFUL")
+
+        if response['content-type'] != 'application/zip'
+          @logger.error("DOWNLOADING FAILED, error: #{response.read_body}")
+          raise 'ERROR WHEN CALLING DATA EXHAUST API'
+        end
+
+        @logger.info('DOWNLOADING SUCCESSFUL')
         response.read_body
       end
     end
