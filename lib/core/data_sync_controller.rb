@@ -7,10 +7,9 @@ module EkstepEcosystem
   module Jobs
     class DataSyncController
 
-      def initialize(sync_date, download_batch_size, dataset_id, resource_id, licence_key,
+      def initialize(sync_date, dataset_id, resource_id, licence_key,
                      data_exhaust_api, s3_client, logger)
         @sync_date = sync_date
-        @download_batch_size = download_batch_size
         @data_exhaust_api = data_exhaust_api
         @logger = logger
         @dataset_id = dataset_id
@@ -20,7 +19,6 @@ module EkstepEcosystem
       end
 
       def sync
-        @logger.info("Syncing")
         begin
           from_date = @sync_date.download_start_date
           to_date = @sync_date.download_end_date
@@ -34,12 +32,13 @@ module EkstepEcosystem
           response_file = save_response_to_file(response)
 
           Zip::File.open(response_file.path) do |zip_file|
-            zip_file.each do |file|
-              upload_file_to_s3(file)
+            zip_file.each do |entry|
+              upload_to_s3_if_file(entry)
             end
           end
 
           @sync_date.update(to_date)
+          File.delete(response_file)
         rescue => e
           @logger.error("EXCEPTION: #{e}")
           return
@@ -47,9 +46,9 @@ module EkstepEcosystem
       end
 
       private
-      def upload_file_to_s3(file)
-        if file.size > 0
-          @s3_client.upload(file)
+      def upload_to_s3_if_file(entry)
+        if entry.file?
+          @s3_client.upload(entry.name, entry.get_input_stream.read)
         end
       end
 

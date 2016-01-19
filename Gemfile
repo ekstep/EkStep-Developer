@@ -7,4 +7,5 @@ gem 'rubyzip', '>= 1.0.0'
 gem 'aws-sdk', '~> 2'
 group :development, :test do
   gem 'rspec'
+  gem 'timecop'
 end

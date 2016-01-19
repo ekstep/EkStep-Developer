@@ -23,18 +23,10 @@ module EkstepEcosystem
                                    config.s3_datasets_bucket,
                                    logger)
           DataSyncController
-              .new(SyncDate.new(config.data_dir,
-                                config.store_file_name,
-                                config.initial_download_date,
-                                config.download_batch_size,
-                                logger),
-                   config.download_batch_size,
-                   config.dataset_id,
-                   config.resource_id,
-                   config.licence_key,
-                   api,
-                   s3_client,
-                   logger)
+              .new(SyncDate.new(config.data_dir, config.store_file_name, config.initial_download_date,
+                                config.download_batch_size, logger),
+                   config.dataset_id, config.resource_id, config.licence_key,
+                   api, s3_client, logger)
               .sync()
           logger.end_task
         rescue => e
