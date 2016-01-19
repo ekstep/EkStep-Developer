@@ -6,7 +6,7 @@ require 'fileutils'
 
 module EkstepEcosystem
   module Jobs
-    class SyncDate
+    class ImportDate
 
       def initialize(data_dir, store_file_name, initial_download_date, download_batch_size, logger)
         @logger = logger
@@ -17,7 +17,7 @@ module EkstepEcosystem
       end
 
       def download_start_date
-        return store.sync_date + 1 if store.sync_date.instance_of?(Date)
+        return store.import_date + 1 if store.import_date.instance_of?(Date)
         @initial_download_date
       end
 
@@ -27,9 +27,9 @@ module EkstepEcosystem
             download_start_date() + (@download_batch_size -1)
       end
 
-      def update(new_sync_date)
-        @logger.info("UPDATING SYNC DATE TO: #{new_sync_date}")
-        store.sync_date = new_sync_date
+      def update(new_import_date)
+        @logger.info("UPDATING IMPORT DATE TO: #{new_import_date}")
+        store.import_date = new_import_date
         store_file = File.open(@store_file_name, "w")
         @logger.info("UPDATED STORE: #{YAML.dump(@store.to_hash)}")
         store_file.write(YAML.dump(@store.to_hash))
@@ -42,7 +42,7 @@ module EkstepEcosystem
           return @store
         end
         @store = read_store_file()
-        @logger.info("STORE: #{@store.to_hash.to_json}")
+        @logger.info("STORE: #{@store.to_hash}")
         return @store
       end
 

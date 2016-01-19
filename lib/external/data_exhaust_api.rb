@@ -16,7 +16,7 @@ module EkstepEcosystem
                    from_date, to_date, licence_key)
         url = URI("#{@endpoint}/#{dataset_id}/#{resource_id}/#{from_date}/#{to_date}")
         request = Net::HTTP::Post.new(url)
-        request["content-type"] = 'application/json'
+        request['content-type'] = 'application/json'
         request.body = {
             :id => 'ekstep.data_exhaust_authorize',
             :ver => '1.0',
@@ -31,11 +31,11 @@ module EkstepEcosystem
         response = @http.request(request)
 
         if response['content-type'] != 'application/zip'
-          @logger.error("DOWNLOADING FAILED, error: #{response.read_body}")
+          @logger.error("DOWNLOAD FAILED, error: #{response.read_body}")
           raise 'ERROR WHEN CALLING DATA EXHAUST API'
         end
 
-        @logger.info('DOWNLOADING SUCCESSFUL')
+        @logger.info('DOWNLOAD SUCCESSFUL')
         response.read_body
       end
     end

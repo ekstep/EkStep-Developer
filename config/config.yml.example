@@ -1,5 +1,5 @@
 ---
-data_dir: ekstep-data-sync
+data_dir: ekstep-data-import
 store_file_name: store.yml
 download_batch_size: 5
 initial_download_date: 2015-01-01 #YYYY-MM-dd format

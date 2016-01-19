@@ -5,11 +5,11 @@ require 'aws-sdk'
 
 module EkstepEcosystem
   module Jobs
-    class DataSyncController
+    class DataImportController
 
-      def initialize(sync_date, dataset_id, resource_id, licence_key,
+      def initialize(import_date, dataset_id, resource_id, licence_key,
                      data_exhaust_api, s3_client, logger)
-        @sync_date = sync_date
+        @import_date = import_date
         @data_exhaust_api = data_exhaust_api
         @logger = logger
         @dataset_id = dataset_id
@@ -18,10 +18,10 @@ module EkstepEcosystem
         @s3_client = s3_client
       end
 
-      def sync
+      def import
         begin
-          from_date = @sync_date.download_start_date
-          to_date = @sync_date.download_end_date
+          from_date = @import_date.download_start_date
+          to_date = @import_date.download_end_date
 
           if from_date >= Date.today
             @logger.info('NOTHING NEW TO DOWNLOAD, GOING AWAY')
@@ -37,7 +37,7 @@ module EkstepEcosystem
             end
           end
 
-          @sync_date.update(to_date)
+          @import_date.update(to_date)
           File.delete(response_file)
         rescue => e
           @logger.error("EXCEPTION: #{e}")

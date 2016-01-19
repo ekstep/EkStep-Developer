@@ -1,9 +1,9 @@
 task :default => :console
 
 namespace :scheduled do
-  task :ekstep_data_sync do
+  task :ekstep_data_import do
     require_relative 'lib/ekstep_ecosystem.rb'
-    EkstepEcosystem::Jobs::DataSyncJob.perform()
+    EkstepEcosystem::Jobs::DataImportJob.perform()
   end
 end
 
