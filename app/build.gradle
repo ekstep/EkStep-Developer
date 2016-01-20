@@ -1,13 +1,15 @@
 apply plugin: 'com.android.application'
 buildscript {
     repositories {
-        maven { url  "http://${nexusIp}:8081/downloads/content/repositories/production/" }
+        maven { url "https://platform.ekstep.org/downloads/content/repositories/production" }
     }
 }
 
+
 repositories {
-    maven { url "http://${nexusIp}:8081/downloads/content/repositories/production/" }
+    maven { url "https://platform.ekstep.org/downloads/content/repositories/production" }
 }
+
 
 android {
     compileSdkVersion 23

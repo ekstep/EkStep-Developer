@@ -35,7 +35,7 @@ import java.util.UUID;
  * Created by Jaya on 9/24/2015.
  */
 public class Util extends Application {
-    public static final boolean DEBUG=true;
+    public static final boolean DEBUG=false;
     private static String TAG =Util.class.getSimpleName();
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
