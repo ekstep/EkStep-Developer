@@ -9,6 +9,7 @@ module EkstepEcosystem
       def initialize(endpoint, logger)
         @endpoint = endpoint
         @http = Net::HTTP.new(URI(endpoint).host, URI(endpoint).port)
+        @http.use_ssl = true if endpoint.start_with?("https")
         @logger = logger
       end
 
