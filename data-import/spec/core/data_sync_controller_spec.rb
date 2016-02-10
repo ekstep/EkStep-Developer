@@ -17,9 +17,9 @@ describe 'Data Import Controller' do
     @store_file_path = File.join(ENV['HOME'], 'ekstepdataimporttest', 'store.yml')
     File.truncate(@store_file_path, 0) rescue nil
     @import_date = EkstepEcosystem::Jobs::ImportDate.new('ekstepdataimporttest', 'store.yml',
-                                                         @initial_download_date, @download_batch_size, @logger)
+     @initial_download_date, @download_batch_size, @logger)
     @controller = EkstepEcosystem::Jobs::DataImportController.new(@import_date, 'dataset 1', 'resource id 1', 'licence key 1',
-                                                                  @data_exhaust_api, @s3_client, @logger)
+      @data_exhaust_api, @s3_client, @logger)
   end
 
   it 'should import data from initial date when previous import date is not present' do
@@ -32,11 +32,28 @@ describe 'Data Import Controller' do
     @controller.import
   end
 
+  def save_zip_entry_to_file(zip_file_entry)
+    dest_file = Tempfile.new('data_exhaust_response_zip_file')
+    @logger.info("SAVING ZIP FILE TO: #{dest_file.path}")
+    dest_file << zip_file_entry.get_input_stream.read
+    dest_file.flush
+    dest_file
+  end
+
   def get_extracted_response_file_content(response_file)
     Zip::File.open(response_file.path) do |zip_file|
       zip_file.each do |entry|
-        if entry.file?
-          return entry.get_input_stream.read
+        if entry.file? && entry.name.end_with?(".gz")
+          saved_entry = save_zip_entry_to_file(entry)
+          Zip::File.open(saved_entry) do |sub_zip_file|
+            sub_zip_file.each do |sub_entry|
+              if sub_entry.file? && sub_entry.name.end_with?('.gz')
+                binding.pry
+                return sub_entry.get_input_stream.read
+              end
+            end
+          end
+          File.delete(saved_entry)
         end
       end
     end
@@ -44,14 +61,14 @@ describe 'Data Import Controller' do
 
   def expectDataExhaustAPIToBeCalled(response_file)
     expect(@data_exhaust_api).to receive(:download).with('dataset 1', 'resource id 1',
-                                                         @initial_download_date,
-                                                         @initial_download_date,
-                                                         'licence key 1')
-                                     .and_return(response_file.read)
+     @initial_download_date,
+     @initial_download_date,
+     'licence key 1')
+    .and_return(response_file.read)
   end
 
   def expectDatasetFileToBeUploadedToS3(aggregated_file)
-    expect(@s3_client).to receive(:upload).with("dataset-2016-01-01-to-2016-01-01-041595063/aggregated-2016-01-01.gz",
-                                                aggregated_file)
+    expect(@s3_client).to receive(:upload).with("dataset-2015-12-01-to-2015-12-01-259814915/data-exhaust-01.log-2015-12-01-1448934061.gz",
+      aggregated_file)
   end
 end
