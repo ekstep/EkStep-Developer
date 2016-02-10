@@ -56,7 +56,6 @@ module EkstepEcosystem
     private
     def upload_to_s3_if_file(entry)
       if entry.file? && entry.name.end_with?('.gz')
-        binding.pry
         @s3_client.upload(entry.name, entry.get_input_stream.read)
       end
     end

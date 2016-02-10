@@ -48,7 +48,6 @@ describe 'Data Import Controller' do
           Zip::File.open(saved_entry) do |sub_zip_file|
             sub_zip_file.each do |sub_entry|
               if sub_entry.file? && sub_entry.name.end_with?('.gz')
-                binding.pry
                 return sub_entry.get_input_stream.read
               end
             end
