@@ -7,7 +7,6 @@ require_relative '../../lib/core/data_import_controller'
 
 describe 'Data Import Controller' do
 
-
   before(:each) do
     @logger = spy('logger')
     @data_exhaust_api = double('data_exhaust_api')
@@ -25,9 +24,9 @@ describe 'Data Import Controller' do
   it 'should import data from initial date when previous import date is not present' do
     Timecop.freeze(Time.local(2016, 01, 02))
     response_file = File.open('./spec/mock_dataexhaust_response.zip')
-    extracted_response_file = get_extracted_response_file_content(response_file)
+    response_file_contents = response_file_contentss(response_file)
     expectDataExhaustAPIToBeCalled(response_file)
-    expectDatasetFileToBeUploadedToS3(extracted_response_file)
+    expectDatasetFileToBeUploadedToS3(response_file_contents)
 
     @controller.import
   end
@@ -40,7 +39,8 @@ describe 'Data Import Controller' do
     dest_file
   end
 
-  def get_extracted_response_file_content(response_file)
+  def response_file_contentss(response_file)
+    response_file_contents = []
     Zip::File.open(response_file.path) do |zip_file|
       zip_file.each do |entry|
         if entry.file? && entry.name.end_with?(".gz")
@@ -48,7 +48,10 @@ describe 'Data Import Controller' do
           Zip::File.open(saved_entry) do |sub_zip_file|
             sub_zip_file.each do |sub_entry|
               if sub_entry.file? && sub_entry.name.end_with?('.gz')
-                return sub_entry.get_input_stream.read
+                response_file_contents << {
+                  name: sub_entry.name,
+                  contents: sub_entry.get_input_stream.read
+                }
               end
             end
           end
@@ -56,6 +59,7 @@ describe 'Data Import Controller' do
         end
       end
     end
+    response_file_contents
   end
 
   def expectDataExhaustAPIToBeCalled(response_file)
@@ -66,8 +70,9 @@ describe 'Data Import Controller' do
     .and_return(response_file.read)
   end
 
-  def expectDatasetFileToBeUploadedToS3(aggregated_file)
-    expect(@s3_client).to receive(:upload).with("dataset-2015-12-01-to-2015-12-01-259814915/data-exhaust-01.log-2015-12-01-1448934061.gz",
-      aggregated_file)
+  def expectDatasetFileToBeUploadedToS3(response_file_contents)
+    response_file_contents.each do |r|
+      expect(@s3_client).to receive(:upload).with(r[:name], r[:contents])
+    end
   end
 end
