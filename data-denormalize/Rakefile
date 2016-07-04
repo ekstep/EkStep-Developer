@@ -1,12 +1,11 @@
 task :default => :console
 
 namespace :scheduled do
-  task :ekstep_data_decrypt do
-    require_relative 'lib/partner_decryptor.rb'
-    EkstepEcosystem::Jobs::PartnerDecryptor.perform()
+  task :ekstep_data_denormalize do
+    require_relative 'lib/partner_denormalizer.rb'
+    EkstepEcosystem::Jobs::PartnerDenormalizer.perform()
   end
 end
-
 
 begin
   require 'rspec/core/rake_task'
