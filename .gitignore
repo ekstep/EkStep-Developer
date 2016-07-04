@@ -9,3 +9,6 @@ build/
 *.iml
 app/*.iml
 import-summary.txt
+.idea/
+**/config/config.yml
+**/config/keys.yml

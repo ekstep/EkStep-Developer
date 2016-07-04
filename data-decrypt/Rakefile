@@ -1,0 +1,19 @@
+task :default => :console
+
+namespace :scheduled do
+  task :data_decrypt do
+    require_relative 'lib/partner_decryptor.rb'
+    EkstepEcosystem::Jobs::PartnerDecryptor.perform()
+  end
+end
+
+
+begin
+  require 'rspec/core/rake_task'
+
+  RSpec::Core::RakeTask.new(:spec)
+
+  task :default => :spec
+rescue LoadError
+  # no rspec available
+end

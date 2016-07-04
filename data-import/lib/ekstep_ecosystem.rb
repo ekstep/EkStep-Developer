@@ -1,11 +1,11 @@
 require 'pry'
 require 'yaml'
-require_relative './utils/ep_logging.rb'
 require_relative '../lib/core/import_date'
 require_relative '../lib/core/data_import_controller'
 require_relative '../lib/external/data_exhaust_api'
 require_relative '../lib/external/s3_client'
 require_relative '../config/config'
+require_relative '../../ep-logging/lib/ep_logging.rb'
 
 module EkstepEcosystem
   module Jobs

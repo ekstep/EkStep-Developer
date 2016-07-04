@@ -1,0 +1,7 @@
+source 'https://rubygems.org'
+
+gem 'rake'
+gem 'pry'
+gem 'hashie'
+gem 'elasticsearch'
+gem 'whenever', '~> 0.9.4'
