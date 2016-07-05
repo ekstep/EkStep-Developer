@@ -62,7 +62,7 @@ module EkstepEcosystem
             end
             offset += N
             page += 1
-            break if response.hits.hits.count == 0
+            break if response.hits.hits.count == 0 || page == 100
           end
           data_dictionary = {}
           uids_to_denormalize.flatten.uniq.each_slice(SLICE) do |batch|
