@@ -2,8 +2,18 @@ task :default => :console
 
 namespace :scheduled do
   task :ekstep_data_import do
-    require_relative 'lib/ekstep_ecosystem.rb'
+    require_relative 'lib/partner_data_import.rb'
     EkstepEcosystem::Jobs::DataImportJob.perform()
+  end
+
+  task :ekstep_data_decrypt do
+    require_relative 'lib/partner_decryptor.rb'
+    EkstepEcosystem::Jobs::PartnerDecryptor.perform()
+  end
+
+  task :ekstep_data_denormalize do
+    require_relative 'lib/partner_denormalizer.rb'
+    EkstepEcosystem::Jobs::PartnerDenormalizer.perform()
   end
 end
 
