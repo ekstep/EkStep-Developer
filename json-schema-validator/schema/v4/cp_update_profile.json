@@ -1,0 +1,184 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {},
+    "id": "CP_UPDATE_PROFILE",
+    "properties": {
+        "cdata": {
+            "id": "/properties/cdata",
+            "items": {
+                "id": "/properties/cdata/items",
+                "properties": {
+                    "id": {
+                        "id": "/properties/cdata/items/properties/id",
+                        "type": "string"
+                    },
+                    "type": {
+                        "id": "/properties/cdata/items/properties/type",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "type",
+                    "id"
+                ],
+                "type": "object"
+            },
+            "type": "array"
+        },
+        "context": {
+            "id": "/properties/context",
+            "properties": {
+                "content_id": {
+                    "id": "/properties/context/properties/content_id",
+                    "type": "string"
+                },
+                "sid": {
+                    "id": "/properties/context/properties/sid",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "content_id",
+                "sid"
+            ],
+            "type": "object"
+        },
+        "edata": {
+            "id": "/properties/edata",
+            "properties": {
+                "eks": {
+                    "id": "/properties/edata/properties/eks",
+                    "properties": {
+                        "access": {
+                            "id": "/properties/edata/properties/eks/properties/access",
+                            "items": {
+                                "id": "/properties/edata/properties/eks/properties/access/items",
+                                "properties": {
+                                    "id": {
+                                        "id": "/properties/edata/properties/eks/properties/access/items/properties/id",
+                                        "type": "string"
+                                    },
+                                    "value": {
+                                        "id": "/properties/edata/properties/eks/properties/access/items/properties/value",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "email": {
+                            "id": "/properties/edata/properties/eks/properties/email",
+                            "type": "string"
+                        },
+                        "name": {
+                            "id": "/properties/edata/properties/eks/properties/name",
+                            "type": "string"
+                        },
+                        "partners": {
+                            "id": "/properties/edata/properties/eks/properties/partners",
+                            "items": {
+                                "id": "/properties/edata/properties/eks/properties/partners/items",
+                                "properties": {
+                                    "id": {
+                                        "id": "/properties/edata/properties/eks/properties/partners/items/properties/id",
+                                        "type": "string"
+                                    },
+                                    "value": {
+                                        "id": "/properties/edata/properties/eks/properties/partners/items/properties/value",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "profile": {
+                            "id": "/properties/edata/properties/eks/properties/profile",
+                            "items": {},
+                            "type": "array"
+                        }
+                    },
+                    "required": [
+                        "access",
+                        "partners",
+                        "profile",
+                        "name",
+                        "email"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "eks"
+            ],
+            "type": "object"
+        },
+        "eid": {
+            "id": "/properties/eid",
+            "type": "string"
+        },
+        "ets": {
+            "id": "/properties/ets",
+            "type": "number"
+        },
+        "mid": {
+            "id": "/properties/mid",
+            "type": "string"
+        },
+        "pdata": {
+            "id": "/properties/pdata",
+            "properties": {
+                "id": {
+                    "id": "/properties/pdata/properties/id",
+                    "type": "string"
+                },
+                "pid": {
+                    "id": "/properties/pdata/properties/pid",
+                    "type": "string"
+                },
+                "ver": {
+                    "id": "/properties/pdata/properties/ver",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "ver",
+                "pid",
+                "id"
+            ],
+            "type": "object"
+        },
+        "rid": {
+            "id": "/properties/rid",
+            "type": "string"
+        },
+        "tags": {
+            "id": "/properties/tags",
+            "items": {},
+            "type": "array"
+        },
+        "uid": {
+            "id": "/properties/uid",
+            "type": "string"
+        },
+        "ver": {
+            "id": "/properties/ver",
+            "type": "string"
+        }
+    },
+    "required": [
+        "ets",
+        "context",
+        "ver",
+        "uid",
+        "tags",
+        "pdata",
+        "mid",
+        "eid",
+        "cdata",
+        "edata",
+        "rid"
+    ],
+    "type": "object"
+}

@@ -1,0 +1,170 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "definitions": {},
+    "id": "BE_OBJECT_LIFECYCLE",
+    "properties": {
+        "cdata": {
+            "id": "/properties/cdata",
+            "items": {
+                "id": "/properties/cdata/items",
+                "properties": {
+                    "id": {
+                        "id": "/properties/cdata/items/properties/id",
+                        "type": "string"
+                    },
+                    "type": {
+                        "id": "/properties/cdata/items/properties/type",
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "type": "array"
+        },
+        "context": {
+            "id": "/properties/context",
+            "properties": {
+                "content_id": {
+                    "id": "/properties/context/properties/content_id",
+                    "type": "string"
+                },
+                "sid": {
+                    "id": "/properties/context/properties/sid",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "sid"
+            ],
+            "type": "object"
+        },
+        "edata": {
+            "id": "/properties/edata",
+            "properties": {
+                "eks": {
+                    "id": "/properties/edata/properties/eks",
+                    "properties": {
+                        "code": {
+                            "id": "/properties/edata/properties/eks/properties/code",
+                            "type": "string"
+                        },
+                        "id": {
+                            "id": "/properties/edata/properties/eks/properties/id",
+                            "type": "string"
+                        },
+                        "name": {
+                            "id": "/properties/edata/properties/eks/properties/name",
+                            "type": "string"
+                        },
+                        "parentid": {
+                            "id": "/properties/edata/properties/eks/properties/parentid",
+                            "type": "string"
+                        },
+                        "parenttype": {
+                            "id": "/properties/edata/properties/eks/properties/parenttype",
+                            "type": "string"
+                        },
+                        "prevstate": {
+                            "id": "/properties/edata/properties/eks/properties/prevstate",
+                            "type": "string"
+                        },
+                        "state": {
+                            "id": "/properties/edata/properties/eks/properties/state",
+                            "type": "string"
+                        },
+                        "subtype": {
+                            "id": "/properties/edata/properties/eks/properties/subtype",
+                            "type": "string"
+                        },
+                        "type": {
+                            "id": "/properties/edata/properties/eks/properties/type",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "code",
+                        "name",
+                        "parenttype",
+                        "subtype",
+                        "state",
+                        "prevstate",
+                        "parentid",
+                        "type",
+                        "id"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "eks"
+            ],
+            "type": "object"
+        },
+        "eid": {
+            "id": "/properties/eid",
+            "type": "string"
+        },
+        "ets": {
+            "id": "/properties/ets",
+            "type": "number"
+        },
+        "mid": {
+            "id": "/properties/mid",
+            "type": "string"
+        },
+        "pdata": {
+            "id": "/properties/pdata",
+            "properties": {
+                "id": {
+                    "id": "/properties/pdata/properties/id",
+                    "type": "string"
+                },
+                "pid": {
+                    "id": "/properties/pdata/properties/pid",
+                    "type": "string"
+                },
+                "ver": {
+                    "id": "/properties/pdata/properties/ver",
+                    "type": "string"
+                }
+            },
+            "required": [
+                "ver",
+                "pid",
+                "id"
+            ],
+            "type": "object"
+        },
+        "rid": {
+            "id": "/properties/rid",
+            "type": "string"
+        },
+        "tags": {
+            "id": "/properties/tags",
+            "items": {},
+            "type": "array"
+        },
+        "uid": {
+            "id": "/properties/uid",
+            "type": "string"
+        },
+        "ver": {
+            "id": "/properties/ver",
+            "type": "string"
+        }
+    },
+    "required": [
+        "ets",
+        "context",
+        "ver",
+        "uid",
+        "tags",
+        "pdata",
+        "mid",
+        "eid",
+        "cdata",
+        "edata",
+        "rid"
+    ],
+    "type": "object"
+}

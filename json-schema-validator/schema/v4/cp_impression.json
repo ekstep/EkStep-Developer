@@ -1,0 +1,279 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {},
+  "id": "CP_IMPRESSION",
+  "properties": {
+    "cdata": {
+      "id": "/properties/cdata",
+      "items": {
+        "id": "/properties/cdata/items",
+        "properties": {
+          "id": {
+            "id": "/properties/cdata/items/properties/id",
+            "type": "string"
+          },
+          "type": {
+            "id": "/properties/cdata/items/properties/type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "context": {
+      "id": "/properties/context",
+      "properties": {
+        "content_id": {
+          "id": "/properties/context/properties/content_id",
+          "type": "string"
+        },
+        "sid": {
+          "id": "/properties/context/properties/sid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "content_id",
+        "sid"
+      ],
+      "type": "object"
+    },
+    "edata": {
+      "id": "/properties/edata",
+      "properties": {
+        "eks": {
+          "id": "/properties/edata/properties/eks",
+          "properties": {
+            "env": {
+              "id": "/properties/edata/properties/eks/properties/env",
+              "oneOf": [
+                {"pattern": "^blog$"},
+                {"pattern": "^community$"},
+                {"pattern": "^concept$"},
+                {"pattern": "^content$"},
+                {"pattern": "^developer$"},
+                {"pattern": "^discussion$"},
+                {"pattern": "^editor$"},
+                {"pattern": "^home$"},
+                {"pattern": "^item$"},
+                {"pattern": "^other$"},
+                {"pattern": "^partner$"},
+                {"pattern": "^textbook$"},
+                {"pattern": "^tutorial$"},
+                {"pattern": "^domain$"},
+                {"pattern": "^contentrequest$"},
+                {"pattern": "^word$"}
+              ],
+              "type": "string"
+            },
+            "id": {
+              "id": "/properties/edata/properties/eks/properties/id",
+              "type": "string"
+            },
+            "name": {
+              "id": "/properties/edata/properties/eks/properties/name",
+              "type": "string"
+            },
+            "pageid": {
+              "id": "/properties/edata/properties/eks/properties/pageid",
+              "oneOf": [
+                {"pattern" : "^com_content$"},
+                {"pattern" : "^com_content.ekstep.homepage$"},
+                {"pattern" : "^com_subusers.organizations.category$"},
+                {"pattern" : "^com_subusers.organization$"},
+                {"pattern" : "^com_easysocial.groups.category$"},
+                {"pattern" : "^com_content.article$"},
+                {"pattern" : "^com_content.category$"},
+                {"pattern" : "^com_content.category.blog$"},
+                {"pattern" : "^com_content.featured$"},
+                {"pattern" : "^com_easyblog$"},
+                {"pattern" : "^com_easyblog.dashboard.write$"},
+                {"pattern" : "^com_easyblog.entry$"},
+                {"pattern" : "^com_easyblog.latest$"},
+                {"pattern" : "^com_easyblog.search$"},
+                {"pattern" : "^com_easydiscuss$"},
+                {"pattern" : "^com_easydiscuss.index$"},
+                {"pattern" : "^com_easydiscuss.post$"},
+                {"pattern" : "^com_easysocial$"},
+                {"pattern" : "^com_easysocial.groups$"},
+                {"pattern" : "^com_easysocial.profile$"},
+                {"pattern" : "^com_ekcontent$"},
+                {"pattern" : "^com_ekcontent.concept$"},
+                {"pattern" : "^com_ekcontent.concept.details$"},
+                {"pattern" : "^com_ekcontent.conceptform.create$"},
+                {"pattern" : "^com_ekcontent.concepts$"},
+                {"pattern" : "^com_ekcontent.concepts.search$"},
+                {"pattern" : "^com_ekcontent.consumers$"},
+                {"pattern" : "^com_ekcontent.consumers.list$"},
+                {"pattern" : "^com_ekcontent.content$"},
+                {"pattern" : "^com_ekcontent.content.details$"},
+                {"pattern" : "^com_ekcontent.content.search$"},
+                {"pattern" : "^com_ekcontent.contentform$"},
+                {"pattern" : "^com_ekcontent.contentform.collection$"},
+                {"pattern" : "^com_ekcontent.contentform.create$"},
+                {"pattern" : "^com_ekcontent.contentform.initcontent$"},
+                {"pattern" : "^com_ekcontent.contentform.lesson$"},
+                {"pattern" : "^com_ekcontent.contentform.lessoncollection$"},
+                {"pattern" : "^com_ekcontent.contentform.textbook$"},
+                {"pattern" : "^com_ekcontent.contentform.textbook.unit$"},
+                {"pattern" : "^com_ekcontent.contentform.upload$"},
+                {"pattern" : "^com_ekcontent.contentrequestform$"},
+                {"pattern" : "^com_ekcontent.contentrequestform.create$"},
+                {"pattern" : "^com_ekcontent.contentrequests$"},
+                {"pattern" : "^com_ekcontent.contentrequests.list$"},
+                {"pattern" : "^com_ekcontent.contents$"},
+                {"pattern" : "^com_ekcontent.dashboard$"},
+                {"pattern" : "^com_ekcontent.dashboard.domain$"},
+                {"pattern" : "^com_ekcontent.dashboard.language$"},
+                {"pattern" : "^com_ekcontent.domain.dashboard$"},
+                {"pattern" : "^com_ekcontent.editor$"},
+                {"pattern" : "^com_ekcontent.itemform$"},
+                {"pattern" : "^com_ekcontent.itemform.create$"},
+                {"pattern" : "^com_ekcontent.items$"},
+                {"pattern" : "^com_ekcontent.items.list$"},
+                {"pattern" : "^com_ekcontent.medialibrary$"},
+                {"pattern" : "^com_ekcontent.search$"},
+                {"pattern" : "^com_ekcontent.search.etextbook$"},
+                {"pattern" : "^com_ekcontent.tbtags$"},
+                {"pattern" : "^com_ekcontent.tbtagsform$"},
+                {"pattern" : "^com_ekcontent.tbtagsform.create$"},
+                {"pattern" : "^com_ekcontent.terms$"},
+                {"pattern" : "^com_ekcontent.textbook.search$"},
+                {"pattern" : "^com_ekcontent.word$"},
+                {"pattern" : "^com_ekcontent.word.details$"},
+                {"pattern" : "^com_ekcontent.wordform$"},
+                {"pattern" : "^com_ekcontent.wordform.create$"},
+                {"pattern" : "^com_ekcontent.words$"},
+                {"pattern" : "^com_ekcontent.words.language.dashboard$"},
+                {"pattern" : "^com_ekcontent.words.list$"},
+                {"pattern" : "^com_media$"},
+                {"pattern" : "^com_newsfeeds$"},
+                {"pattern" : "^com_rsticketspro$"},
+                {"pattern" : "^com_subusers$"},
+                {"pattern" : "^com_subusers.initiativeform.create$"},
+                {"pattern" : "^com_subusers.organization.details$"},
+                {"pattern" : "^com_subusers.organizationform.create$"},
+                {"pattern" : "^com_subusers.organizations.list$"},
+                {"pattern" : "^com_subusers.organizations.pin$"},
+                {"pattern" : "^com_subusers.programform.create$"},
+                {"pattern" : "^com_subusers.programtagform.create$"},
+                {"pattern" : "^com_subusers.programtags.list$"},
+                {"pattern" : "^com_subusers.userform.create$"},
+                {"pattern" : "^com_subusers.users.list$"},
+                {"pattern" : "^com_ekcontent.search.content$"},
+                {"pattern" : "^com_subusers.programtagform$"},
+                {"pattern" : "^com_ekcontent.recommendation.display$"},
+                {"pattern" : "^com_easysocial.groups.item$"},
+                {"pattern" : "^com_ekcontent.search.word$"},
+                {"pattern" : "^com_ekcontent.contentform.default$"},
+                {"pattern" : "^com_easysocial.profile.edit$"},
+                {"pattern" : "^com_tags$"},
+                {"pattern" : "^com_users$"}
+              ],
+              "type": "string"
+            },
+            "type": {
+              "id": "/properties/edata/properties/eks/properties/type",
+              "oneOf": [
+                {"pattern": "^view$"},
+                {"pattern": "^edit$"},
+                {"pattern": "^list$"}
+              ],
+              "type": "string"
+            },
+            "url": {
+              "id": "/properties/edata/properties/eks/properties/url",
+              "type": "string"
+            }
+          },
+          "required": [
+            "pageid",
+            "name",
+            "url",
+            "env",
+            "type",
+            "id"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "eks"
+      ],
+      "type": "object"
+    },
+    "eid": {
+      "id": "/properties/eid",
+      "type": "string"
+    },
+    "ets": {
+      "id": "/properties/ets",
+      "type": "number"
+    },
+    "mid": {
+      "id": "/properties/mid",
+      "type": "string"
+    },
+    "pdata": {
+      "id": "/properties/pdata",
+      "properties": {
+        "id": {
+          "id": "/properties/pdata/properties/id",
+          "type": "string"
+        },
+        "pid": {
+          "id": "/properties/pdata/properties/pid",
+          "type": "string"
+        },
+        "ver": {
+          "id": "/properties/pdata/properties/ver",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ver",
+        "pid",
+        "id"
+      ],
+      "type": "object"
+    },
+    "rid": {
+      "id": "/properties/rid",
+      "type": "string"
+    },
+    "tags": {
+      "id": "/properties/tags",
+      "items": {},
+      "type": "array",
+      "uniqueItems": true
+    },
+    "uid": {
+      "id": "/properties/uid",
+      "type": "string"
+    },
+    "ver": {
+      "id": "/properties/ver",
+      "type": "string"
+    }
+  },
+  "required": [
+    "ets",
+    "context",
+    "ver",
+    "uid",
+    "tags",
+    "pdata",
+    "mid",
+    "eid",
+    "cdata",
+    "edata",
+    "rid"
+  ],
+  "type": "object"
+}
