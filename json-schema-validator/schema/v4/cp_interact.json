@@ -1,0 +1,207 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "definitions": {},
+  "id": "CP_INTERACT",
+  "properties": {
+    "cdata": {
+      "id": "/properties/cdata",
+      "items": {
+        "id": "/properties/cdata/items",
+        "properties": {
+          "id": {
+            "id": "/properties/cdata/items/properties/id",
+            "type": "string"
+          },
+          "type": {
+            "id": "/properties/cdata/items/properties/type",
+            "type": "string"
+          }
+        },
+        "required": [
+          "type",
+          "id"
+        ],
+        "type": "object"
+      },
+      "type": "array",
+      "uniqueItems": true
+    },
+    "context": {
+      "id": "/properties/context",
+      "properties": {
+        "content_id": {
+          "id": "/properties/context/properties/content_id",
+          "type": "string"
+        },
+        "sid": {
+          "id": "/properties/context/properties/sid",
+          "type": "string"
+        }
+      },
+      "required": [
+        "content_id",
+        "sid"
+      ],
+      "type": "object"
+    },
+    "edata": {
+      "id": "/properties/edata",
+      "properties": {
+        "eks": {
+          "id": "/properties/edata/properties/eks",
+          "properties": {
+            "context": {
+                "id": "/properties/edata/properties/eks/properties/context",
+                "type": "string"
+            },
+            "env": {
+                "id": "/properties/edata/properties/eks/properties/env",
+                "oneOf": [
+                  {"pattern": "^blog$"},
+                  {"pattern": "^community$"},
+                  {"pattern": "^concept$"},
+                  {"pattern": "^content$"},
+                  {"pattern": "^developer$"},
+                  {"pattern": "^discussion$"},
+                  {"pattern": "^editor$"},
+                  {"pattern": "^home$"},
+                  {"pattern": "^item$"},
+                  {"pattern": "^other$"},
+                  {"pattern": "^partner$"},
+                  {"pattern": "^textbook$"},
+                  {"pattern": "^tutorial$"},
+                  {"pattern": "^domain$"},
+                  {"pattern": "^word$"}
+                ],
+                "type": "string"
+            },
+            "subtype": {
+                "id": "/properties/edata/properties/eks/properties/subtype",
+                "type": "string"
+            },
+            "target": {
+                "id": "/properties/edata/properties/eks/properties/target",
+                "oneOf": [
+                  {"pattern": "^asset$"},
+                  {"pattern": "^concept$"},
+                  {"pattern": "^content$"},
+                  {"pattern": "^lesson$"},
+                  {"pattern": "^recommendation$"},
+                  {"pattern": "^textbooksubunit$"},
+                  {"pattern": "^textbookunit$"},
+                  {"pattern": "^lessonpicker$"},
+                  {"pattern": "^tab$"},
+                  {"pattern": "^alert$"},
+                  {"pattern": "^textbook$"},
+                  {"pattern": "^$"}
+                ],
+                "type": "string"
+            },
+            "targetid": {
+                "id": "/properties/edata/properties/eks/properties/targetid",
+                "type": "string"
+            },
+            "type": {
+                "id": "/properties/edata/properties/eks/properties/type",
+                "oneOf": [
+                  {"pattern": "^change$"},
+                  {"pattern": "^click$"},
+                  {"pattern": "^drag$"},
+                  {"pattern": "^popup$"},
+                  {"pattern": "^action$"},
+                  {"pattern": "^select$"}
+                ],
+                "type": "string"
+            },
+            "values": {
+                "id": "/properties/edata/properties/eks/properties/values",
+                "items": {},
+                "type": "array"
+            }
+          },
+          "required": [
+            "env",
+            "targetid",
+            "subtype",
+            "values",
+            "context",
+            "type",
+            "target"
+          ],
+          "type": "object"
+        }
+      },
+      "required": [
+        "eks"
+      ],
+      "type": "object"
+    },
+    "eid": {
+      "id": "/properties/eid",
+      "type": "string"
+    },
+    "ets": {
+      "id": "/properties/ets",
+      "type": "number"
+    },
+    "mid": {
+      "id": "/properties/mid",
+      "type": "string"
+    },
+    "pdata": {
+      "id": "/properties/pdata",
+      "properties": {
+        "id": {
+          "id": "/properties/pdata/properties/id",
+          "type": "string"
+        },
+        "pid": {
+          "id": "/properties/pdata/properties/pid",
+          "type": "string"
+        },
+        "ver": {
+          "id": "/properties/pdata/properties/ver",
+          "type": "string"
+        }
+      },
+      "required": [
+        "ver",
+        "pid",
+        "id"
+      ],
+      "type": "object"
+    },
+    "rid": {
+      "id": "/properties/rid",
+      "type": "string"
+    },
+    "tags": {
+      "id": "/properties/tags",
+      "items": {},
+      "type": "array",
+      "uniqueItems": true
+    },
+    "uid": {
+      "id": "/properties/uid",
+      "type": "string"
+    },
+    "ver": {
+      "id": "/properties/ver",
+      "type": "string"
+    }
+  },
+  "required": [
+    "ets",
+    "context",
+    "ver",
+    "uid",
+    "tags",
+    "pdata",
+    "mid",
+    "eid",
+    "cdata",
+    "edata",
+    "rid"
+  ],
+  "type": "object"
+}
