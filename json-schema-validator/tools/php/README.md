@@ -18,7 +18,7 @@ php validate.php <path to your data file>
 ```
 
 ## Schema
-The schema files should be kept ../../schema/v<schema version> and should be named as:
+The schema files should be kept at ../../schema/v&lt;schema version&gt; and should be named as:
 * file name should be all lowercase
 * file name should exactly match the event type. eg: be_object_lifecycle, cp_interact
 * file should have dot json extension
