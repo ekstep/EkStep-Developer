@@ -188,6 +188,42 @@
     "ver": {
       "id": "/properties/ver",
       "type": "string"
+    },
+    "etags": {
+      "id": "/properties/etags",
+      "maxProperties": 3,
+      "minProperties": 1,
+      "properties": {
+        "app": {
+          "id": "/properties/etags/properties/app",
+          "items": {
+            "id": "/properties/etags/properties/app/items",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "dims": {
+          "id": "/properties/etags/properties/dims",
+          "items": {
+            "id": "/properties/etags/properties/dims/items",
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "partner": {
+          "id": "/properties/etags/properties/partner",
+          "items": {
+            "id": "/properties/etags/properties/partner/items",
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "channel": {
+      "id": "/properties/channel",
+      "type": "string"
     }
   },
   "required": [
@@ -201,7 +237,9 @@
     "eid",
     "cdata",
     "edata",
-    "rid"
+    "rid",
+    "etags",
+    "channel"
   ],
   "type": "object"
 }
