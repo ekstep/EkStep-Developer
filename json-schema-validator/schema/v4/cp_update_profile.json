@@ -169,7 +169,7 @@
         "etags": {
           "id": "/properties/etags",
           "maxProperties": 3,
-          "minProperties": 1,
+          "minProperties": 3,
           "properties": {
             "app": {
               "id": "/properties/etags/properties/app",
@@ -196,6 +196,11 @@
               "type": "array"
             }
           },
+          "required": [
+            "partner",
+            "app",
+            "dims"
+          ],
           "type": "object"
         },
         "channel": {
