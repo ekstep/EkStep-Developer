@@ -10,15 +10,16 @@ See [json-schema](http://json-schema.org/) for more details.
 composer install
 ```
 ### Having trouble installing composer
+
   1. Mac
   
-    ```
+    
     brew update
     brew tap homebrew/dupes
     brew tap homebrew/php
     brew install php56
     brew install composer
-    ```
+    
   
 ## Usage
 
