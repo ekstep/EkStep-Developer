@@ -1,5 +1,9 @@
 <?php
 
+require_once __DIR__ . "/../lib/php-jwt/src/JWT.php";
+
+use \Firebase\JWT\JWT;
+
 /**
  * This class helps a partner organization integrate with NTP
  *
@@ -10,9 +14,12 @@ class Ntp
 {
 	private $_config;
 
-	public function __construct()
+	private $_private_key = '';
+
+	public function __construct($private_key = '')
 	{
 		$this->_config = parse_ini_file('config.ini');
+		$this->_private_key = $private_key;
 	}
 
 	/**
@@ -152,6 +159,36 @@ class Ntp
 				}';
 
 		return $this->exec($apiUrl, $apiBody);
+	}
+
+	public function getToken($data)
+	{
+		if (!$this->_private_key) {
+			return false;
+		}
+
+		$uuid = uniqid($this->_config['uuid_prefix'], true);
+		$iat = time();
+		$nbf = $iat;
+		$exp = $iat + $this->_config['jwt_validity'];
+
+		$payload = array("jti" => $uuid,
+			"iss" => $this->_config['provider'],
+			"sub" => $data['userName'],
+			"aud" => $this->_config['jwt_base_url'],
+			"iat" => $iat,
+			"nbf" => $nbf,
+			"exp" => $exp,
+			"name" => $data['name'],
+			"email" => $data['email'],
+			"email_verified" => $data['emailVerified'],
+			"phone_number" => $data['phone'],
+			"phone_number_verified" => $data['phoneVerified'],
+			"redirect_uri" => $this->_config['jwt_redirect_url']);
+
+		$jwt = JWT::encode($payload, $this->_private_key, 'RS256');
+
+		return $jwt;
 	}
 
 	/**
