@@ -3,7 +3,7 @@
 require_once 'ntp/ntp.php';
 
 /************* Create user *************/
-$data = array('fname' => 'A V S S SUBBA',
+/*$data = array('fname' => 'A V S S SUBBA',
     				'email' => 'gsbajaj@apschooledu.in',
     				'emailVerified' => 'true',
     				'userName' => '9341229258',
@@ -16,7 +16,7 @@ $resp = $ntp->createUser($data);
 
 echo "<pre>";
 var_dump($resp);
-echo "</pre>";
+echo "</pre>";*/
 
 
 /*
@@ -36,3 +36,20 @@ array(2) {
   string(255) "{"id":"api.user.create","ver":"v1","ts":"2017-07-31 04:44:08:598+0000","params":{"resmsgid":null,"msgid":null,"err":null,"status":"success","errmsg":null},"responseCode":"OK","result":{"response":"SUCCESS","userId":"44291d87-e964-40d7-84a1-8498f92f0ec2"}}"
 }
 */
+
+/************* Get JWT Token *************/
+
+// $data = array('name' => 'A V S S SUBBA',
+//             'email' => 'gsbajaj@apschooledu.in',
+//             'emailVerified' => 'true',
+//             'userName' => '9341229258',
+//             'phone' => '9341229258',
+//             'phoneVerified' => 'true',
+//           );
+
+// $ntp = new Ntp();
+// $resp = $ntp->getToken($data);
+
+// echo "<pre>";
+// var_dump($resp);
+// echo "</pre>";
